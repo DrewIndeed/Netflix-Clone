@@ -1,5 +1,6 @@
 import instance from "../axios";
 import React, { useState, useEffect } from "react";
+import "./Row.css";
 
 // base url for images
 const base_url = "https://image.tmdb.org/t/p/original/";
@@ -28,17 +29,20 @@ function Row(props) {
   }, [props.fetchUrl]);
 
   // to see if the request using useEffect works
-  // console.log(movies);
+//   console.log(movies);
 
   return (
     <div className="row">
       <h2>{props.title}</h2>
 
       <div className="row__posters">
-        {movies.map((movie) => (
+        {/* use map to do something with each of the item in the array movies  */}
+        {/* 'movie.backdrop_path &&' means only render if this is not null */}
+        {movies.map((movie) => (movie.backdrop_path &&
           <img
+            key={movie.id}
             className="row__poster"
-            src={`${base_url}${movie.poster_path}`}
+            src={`${base_url}${movie.backdrop_path}`}
             alt={movie.name}
           />
         ))}
