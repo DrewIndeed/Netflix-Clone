@@ -33,7 +33,7 @@ function Row(props) {
 
   return (
     <div className="row">
-      <h2 style={{color: "white"}}>{props.title}</h2>
+      <h3 style={{color: "white", marginLeft: "20px", letterSpacing: "1,5px"}}>{props.title}</h3>
 
       <div className="row__posters">
         {/* use map to do something with each of the item in the array movies  */}
@@ -42,6 +42,7 @@ function Row(props) {
           <img
             key={movie.id}
             className={`row__poster ${props.isLargeRow && "row__poster-large"}`}
+            style={{display:`${(!movie.backdrop_path || !movie.poster_path) ? "none" : "block"}`}}
             src={`${base_url}${props.isLargeRow? movie.poster_path : movie.backdrop_path}`}
             alt={movie.name}
           />

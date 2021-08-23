@@ -50,6 +50,8 @@ const Banner = () => {
           {movie?.title || movie?.name || movie?.original_name}
         </h1>
 
+        <h1 className="banner__description">{truncate(movie?.overview, 150)}</h1>
+
         <div className="banner__buttons">
           <button className="banner__button">
             <img
@@ -129,9 +131,9 @@ const Banner = () => {
             <span>More Info</span>
           </button>
         </div>
-
-        <h1 className="banner__description">{truncate(movie?.overview, 200)}</h1>
       </div>
+
+      <div className="banner--fadeBottom"></div>
     </header>
   );
 };
