@@ -1,12 +1,16 @@
 import instance from "../axios";
 import React, { useState, useEffect } from "react";
 import "./Row.css";
+import YouTube from "react-youtube";
+import movieTrailer from "movie-trailer";
+
 
 // base url for images
 const base_url = "https://image.tmdb.org/t/p/original/";
 
 function Row(props) {
   const [movies, setMovies] = useState([]);
+  const [trailerUrl, setTrailerUrl] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -31,6 +35,27 @@ function Row(props) {
   // to see if the request using useEffect works
 //   console.log(movies);
 
+  const opts = {
+    height: "400",
+    width: "100%",
+    playerVars: {
+      autoplay: 1
+    }, 
+  }
+
+  const handleClick = (movie) => {
+    if (trailerUrl) {
+      setTrailerUrl('');
+    } else {
+      // movieTrailer an npm module
+      movieTrailer(movie?.name || "")
+        .then( (url) => {
+          const urlParams = new URLSearchParams(new URL(url).search);
+          setTrailerUrl(urlParams.get('v'));
+        }).catch(error => console.log(error));
+    }
+  }
+
   return (
     <div className="row">
       <h3 style={{color: "white", marginLeft: "20px", letterSpacing: "1,5px"}}>{props.title}</h3>
@@ -40,6 +65,7 @@ function Row(props) {
         {/* 'movie.backdrop_path &&' means only render if this is not null */}
         {movies.map((movie) => (
           <img
+            onClick={ () => handleClick(movie) }
             key={movie.id}
             className={`row__poster ${props.isLargeRow && "row__poster-large"}`}
             style={{display:`${(!movie.backdrop_path || !movie.poster_path) ? "none" : "block"}`}}
@@ -48,6 +74,7 @@ function Row(props) {
           />
         ))}
       </div>
+      {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
     </div>
   );
 }

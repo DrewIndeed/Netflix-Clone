@@ -26,6 +26,7 @@
 
 .row__poster:hover {
     transform: scale(1.15);
+    cursor: pointer;
 }
 
 .row__poster-large {
